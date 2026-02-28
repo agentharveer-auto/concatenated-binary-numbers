@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Concatenated Binary Numbers</title>
+</head>
+<body>
+  <h1>Concatenated Binary Numbers</h1>
+  <p>Compute the decimal value of the binary string formed by concatenating the binary representations of 1..n (mod 1e9+7).</p>
+  <label for="nInput">n:</label>
+  <input id="nInput" type="number" min="1" value="3" />
+  <button id="calcBtn">Compute</button>
+  <p>Result: <span id="result">-</span></p>
+
+  <script>
+    async function compute() {
+      const n = parseInt(document.getElementById('nInput').value, 10);
+      const resp = await fetch('/calculate', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ n })
+      });
+      if (resp.ok) {
+        const data = await resp.json();
+        document.getElementById('result').textContent = data.result;
+      } else {
+        document.getElementById('result').textContent = 'Error';
+      }
+    }
+    document.getElementById('calcBtn').addEventListener('click', compute);
+  </script>
+</body>
+</html>
